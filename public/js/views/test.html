@@ -1,0 +1,73 @@
+<button type="button" class="btn btn-primary" ng-click = "testOrderDialog()"> Add </button>
+
+
+
+<div class="row">
+    <input type="text" ng-model="selected" placeholder="customer .. " 
+           typeahead="cust as cust.COMPANY for cust in getCustomers($viewValue)"  
+           typeahead-on-select ="getStandingOrders()"
+           typeahead-loading="loadingLocations" class="form-control">
+</div>
+
+<div class="alert alert-danger" ng-show = "noStandingOrders">
+    No Standing Orders
+</div>
+
+<div class="row" ng-show = "!noStandingOrders">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Created</th>
+                <th>Order No</th>
+                <th>Status</th>
+                <th>Day</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="sorder in sorders" ng-click="sOrderDetails(sorder.CUSTNO, sorder.ORDERNO)">
+                <td>{{sorder.CREATED_DATE}}</td>
+                <td>{{sorder.ORDERNO}}</td>
+                <td>{{sorder.STATUS}}</td>
+                <td>{{sorder.STANDING_DAY}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-primary" ng-click = "newStandingOrder(sorders[0].CUSTNO)"> Add </button>
+    <button type="button" class="btn btn-primary" ng-click = "deleteStandingOrder()"> Delete </button>
+    
+</div>
+
+<div class="alert alert-danger" ng-show = "noDetails">
+    No details to display
+</div>
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IN</th>
+                <th>ItemNo</th>
+                <th>Packs</th>
+                <th>Description</th>
+                <th>SellPrice</th>
+                <th>Discount</th>
+                <th>Vat</th>
+                <th>ExtPrice</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="detail in details">
+                <td>{{detail.PROCESS}}</td>
+                <td>{{detail.ITEMNO}}</td>
+                <td>{{detail.PACKS}}</td>
+                <td></td>
+                <td>{{detail.STOREDPRICE}}</td>
+                <td>{{detail.DISCOUNT}}</td>
+                <td>{{detail.VATAMOUNT}}</td>
+                <td>{{detail.STOREDPRICE * detail.QTY}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

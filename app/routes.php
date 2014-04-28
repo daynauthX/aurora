@@ -14,8 +14,9 @@
 //this will eventually route to the frontend dash board
 Route::get('/', function()
 {
-	return 'hello world';
+    return View::make('index');
 });
+
 
 //Routes for Standing Orders
 Route::resource('standingorders', 'StandingOrdersController');
@@ -26,6 +27,9 @@ Route::resource('customers', 'CustomersController');
 Route::resource('customers.standingorder', 'CustomersStandingOrdersController');
 Route::resource('products', 'ProductsController');
 Route::resource('products.standingorder', 'ProductsStandingOrdersController');
+
+//authentication
+Route::resource('login', 'LoginController');
 
 ///// IORDER APP SERVICES
 Route::get('orders/{custId}','OrderController@showOrders');

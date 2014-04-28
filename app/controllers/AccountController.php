@@ -43,9 +43,7 @@ class AccountController extends \BaseController {
 	public function show($id, $limit = 10)
 	{
             
-            //echo $limit;
             $this->account = new Account();
-            //return $this->account->getDetails($id);
             return Response::json(array('name' => 'steve', 'state' => 'ny'));
 	}
 

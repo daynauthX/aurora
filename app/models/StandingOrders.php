@@ -26,15 +26,17 @@ class StandingOrders {
             $so = $this->soap->GetStandingOrders($this->licence, $id);
             Cache::put($cache_id, $so, 60);
         }
-        return isset($so) ? array_slice($so->orders, $offset, $limit): null;
+        //return isset($so) ? array_slice($so->orders, $offset, $limit): null;
+        return isset($so) ? array_slice($so->orders, $offset, $limit): array( 0 => array('ORDERNO' => -1));
     }
     
     //get the details of a single standing order
     public function getDetails($id, $order){
-        $cache_id = "standingorder_" . $order;
-        $so = null;
+        //$cache_id = "standingorder_" . $order;
+        //$so = null;
         
         //get standing order from cache if it exist
+        /*
         if(Cache::has($cache_id)){
             $so =  Cache::get($cache_id);
         }
@@ -45,7 +47,9 @@ class StandingOrders {
             Cache::put($cache_id, $so, 60);
             
         }
-        return isset($so)? $so->orderdetails: null;
+        */
+        $so = $this->soap->GetStandingOrderDetails($this->licence, $id, $order);
+        return isset($so)? $so->orderdetails: array( 0 => array('ORDERNO' => -1));
     }
     
     //insert a new standing order for a customer
@@ -106,7 +110,13 @@ class StandingOrders {
     
     public function getEtag($order){
         $query = DB::select('select DateModified from standingorders where StandingOrdersId = ?', array($order));
-        return md5($query[0]->DateModified);
+        $result = -1;
+        
+        try{
+            $result = md5($query[0]->DateModified);
+        } catch (ErrorException $ex) {
+        }
+        return $result;        
     }
 }
 

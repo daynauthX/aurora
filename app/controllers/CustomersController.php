@@ -1,6 +1,12 @@
 <?php
 
 class CustomersController extends \BaseController {
+    
+        private $customers;
+    
+        public function __construct() {
+            $this->customers = new Customers();
+        }
 
 	/**
 	 * Display a listing of the resource.
@@ -40,7 +46,13 @@ class CustomersController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+            $cuslist = $this->customers->find($id);
+            if(isset($cuslist)){
+                return Response::json($cuslist);
+            }
+            else{
+                App::abort(404);
+            }
 	}
 
 	/**

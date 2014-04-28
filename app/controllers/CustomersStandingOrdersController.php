@@ -17,7 +17,7 @@ class CustomersStandingOrdersController extends \BaseController {
 	{
             $offset = 0;
             if(isset($id)){
-                return Response::json($this->standingOrders->get($id, $offset, $limit));
+                return Response::json($this->standingOrders->get($id, $offset, $limit)); 
             }
             else{
                 Response::json(array(
