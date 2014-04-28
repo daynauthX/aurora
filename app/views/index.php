@@ -10,13 +10,13 @@
         
     </head>
     <body ng-app = "bakeryApp" >
-        <nav class ="navbar navbar-default" role="navigation" ng-controller="NavController">
+        <nav class ="navbar navbar-default" role="navigation" >
             <div class="navbar-header">
                 <a class="navbar-brand">Bakery</a>
             </div>
             <div>
                 <ul class="nav navbar-nav">
-                    <li ng-class="active:isActive('/standingorders')"><a href="/#/standingorders">Standing Orders</a></li>
+                    <li><a href="/#/standingorders">Standing Orders</a></li>
                     <li><a href="/#/orders">Orders</a></li>
                     <li><a href="#">Log out</a></li>
                 </ul>
@@ -39,6 +39,7 @@
         <script src="js/restangular.min.js"></script>
         <script src="js/ui-bootstrap-0.10.0.min.js"></script>
         <script src="js/app.js"></script>
+        
         <script src="js/controllers/LoginController.js"></script>
         <script src="js/controllers/HelloController.js"></script>
         <script src="js/controllers/StandingOrdersController.js"></script>
