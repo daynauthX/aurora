@@ -15,39 +15,12 @@ class StandingOrders {
     
     //get all standing orders for a customer
     public function get($id, $offset = 0, $limit = 10){
-        $cache_id = "customer_" . $id;
-        $so = null;
-        
-        //get standing order from cache
-        if(Cache::has($cache_id)){
-            $so = Cache::get($cache_id);
-        }
-        else{
-            $so = $this->soap->GetStandingOrders($this->licence, $id);
-            Cache::put($cache_id, $so, 60);
-        }
-        //return isset($so) ? array_slice($so->orders, $offset, $limit): null;
+        $so = $this->soap->GetStandingOrders($this->licence, $id);
         return isset($so) ? array_slice($so->orders, $offset, $limit): array( 0 => array('ORDERNO' => -1));
     }
     
     //get the details of a single standing order
     public function getDetails($id, $order){
-        //$cache_id = "standingorder_" . $order;
-        //$so = null;
-        
-        //get standing order from cache if it exist
-        /*
-        if(Cache::has($cache_id)){
-            $so =  Cache::get($cache_id);
-        }
-        else{
-            //echo "reading from server";
-            //else make call to soap service and then add to cache
-            $so = $this->soap->GetStandingOrderDetails($this->licence, $id, $order);
-            Cache::put($cache_id, $so, 60);
-            
-        }
-        */
         $so = $this->soap->GetStandingOrderDetails($this->licence, $id, $order);
         return isset($so)? $so->orderdetails: array( 0 => array('ORDERNO' => -1));
     }
@@ -68,25 +41,27 @@ class StandingOrders {
     
     //delete a standing order from a customer
     public function remove($order){
+        /*
         $cache_id = "standingorder_" . $order;
         
         //remove standing order from cache
         if(Cache::has($cache_id)){
             Cache::forget($cache_id);
         }
-        
+        */
         $so = $this->soap->removeStandingOrder($this->licence, $order);
         return $so;
     }
     
     public function insertItem($part, $order){
-        $cache_id = "standingorder_" . $order;
+        //$cache_id = "standingorder_" . $order;
         
         //remove standing order from cache
+        /*
         if(Cache::has($cache_id)){
             Cache::forget($cache_id);
         }
-        
+        */
         $so = $this->soap->insertItemInToStandingOrder($this->licence, $part, $order);
         return $so;
     }

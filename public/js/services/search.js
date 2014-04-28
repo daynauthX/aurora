@@ -14,6 +14,10 @@ bakeryApp.service('search', function(Restangular){
     };
     
     this.addStandingOrders = function(id){
-        Restangular.one('customers', id).post('standingorders');
+        return Restangular.one('customers', id).post('standingorder');
+    };
+    
+    this.deleteStandingOrders = function(id){
+        return Restangular.one('standingorders', id).remove();
     };
 });

@@ -6,12 +6,15 @@
     <input type="text" ng-model="selected" placeholder="customer .. " 
            typeahead="cust as cust.COMPANY for cust in getCustomers($viewValue)"  
            typeahead-on-select ="getStandingOrders()"
-           typeahead-loading="loadingLocations" class="form-control">
+           typeahead-loading="isLoading" class="form-control">
+    <i ng-show="isLoading" class="glyphicon glyphicon-refresh"></i>
+    
+    <div class="alert alert-danger" ng-show = "noStandingOrders">
+        No Standing Orders
+    </div>
 </div>
 
-<div class="alert alert-danger" ng-show = "noStandingOrders">
-    No Standing Orders
-</div>
+
 
 <div class="row" ng-show = "!noStandingOrders">
     <table class="table table-hover table-striped">
@@ -24,7 +27,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="sorder in sorders" ng-click="sOrderDetails(sorder.CUSTNO, sorder.ORDERNO)">
+            <tr ng-repeat="sorder in sorders" ng-click="sOrderDetails(sorder.CUSTNO, sorder.ORDERNO)" 
+                ng-class="{info: sorder.ORDERNO === selectedOrder}" style = "cursor: pointer">
                 <td>{{sorder.CREATED_DATE}}</td>
                 <td>{{sorder.ORDERNO}}</td>
                 <td>{{sorder.STATUS}}</td>
@@ -65,7 +69,7 @@
                 <td>{{detail.STOREDPRICE}}</td>
                 <td>{{detail.DISCOUNT}}</td>
                 <td>{{detail.VATAMOUNT}}</td>
-                <td>{{detail.STOREDPRICE * detail.QTY}}</td>
+                <td>{{detail.STOREDPRICE * detail.QTY | number : 2 }}</td>
             </tr>
         </tbody>
     </table>

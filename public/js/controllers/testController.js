@@ -3,6 +3,7 @@
 bakeryApp.controller('testController',
     function testController($scope, search, $modal, Restangular){
         $scope.noStandingOrders = true;
+        $scope.selectedOrder = null;
         
         $scope.getCustomers = function(val){
             return search.cust(val).then(function(customer){
@@ -31,18 +32,19 @@ bakeryApp.controller('testController',
         
 
         $scope.newStandingOrder = function(id){
-            //console.log(id);
-            
             search.addStandingOrders(id).then(function(){
-                console.log('saved');
+                $scope.getStandingOrders();
             }, function(){
                 console.log('not saved');
+            });   
+        };
+          
+        $scope.deleteStandingOrder = function(){
+            //console.log("deleted: " + $scope.selectedOrder);
+            search.deleteStandingOrders($scope.selectedOrder).then(function(){
+                $scope.getStandingOrders();
             });
             
-        };
-        
-        $scope.deleteStandingOrder = function(id){
-            console.log("delete");
         };
         
         
@@ -59,6 +61,7 @@ bakeryApp.controller('testController',
         };
         
         $scope.sOrderDetails = function(custNum, orderNum){
+            $scope.selectedOrder = orderNum;
             search.sorderDetails(custNum, orderNum).then(function(data){
                 $scope.details = data;
                 if($scope.details[0].ORDERNO === - 1){
